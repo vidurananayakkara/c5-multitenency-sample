@@ -1,5 +1,4 @@
 # Package Files #
-*.jar
 
 # Ignore everything in this directory
 target

@@ -46,6 +46,7 @@ RUN add-apt-repository main                                                     
 # Environment variables
 # --------------------------------
 ENV WSO2_CARBON_VERSION 5.2.0-SNAPSHOT
+ENV WSO2_CARBON_CAAS_VERSION 1.0.0-SNAPSHOT
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 ENV CARBON_HOME /opt/wso2carbon-kernel-$WSO2_CARBON_VERSION
 
@@ -56,6 +57,7 @@ ADD package/wso2carbon-kernel-$WSO2_CARBON_VERSION.zip /opt/
 RUN unzip wso2carbon-kernel-$WSO2_CARBON_VERSION.zip
 RUN rm wso2carbon-kernel-$WSO2_CARBON_VERSION.zip
 COPY package/authserver.jar/ /opt/wso2carbon-kernel-$WSO2_CARBON_VERSION/osgi/dropins/
+COPY package/org.wso2.carbon.security.caas-$WSO2_CARBON_CAAS_VERSION.jar/ /opt/wso2carbon-kernel-$WSO2_CARBON_VERSION/osgi/dropins/
 
 # --------------------------------
 # Remove unnecessary packages

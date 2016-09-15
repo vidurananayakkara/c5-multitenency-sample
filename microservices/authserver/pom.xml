@@ -47,6 +47,22 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>deployment/package
+                            </outputDirectory>
+                            <excludeArtifactIds>*</excludeArtifactIds>
+                            <includeArtifactIds>org.wso2.carbon.security.caas</includeArtifactIds>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>install-jar</id>
                         <phase>install</phase>
                         <goals>
@@ -69,29 +85,6 @@
         </plugins>
     </build>
 
-    <!--<properties>-->
-        <!--<carbon.component>-->
-            <!--osgi.service;objectClass="org.wso2.msf4j.Microservice"-->
-        <!--</carbon.component>-->
-        <!--<import.package>-->
-            <!--org.osgi.framework.*;version="${osgi.framework.package.import.version.range}",-->
-            <!--org.slf4j.*;version="${slf4j.logging.package.import.version.range}",-->
-            <!--org.wso2.carbon.security.caas.user.core.*,-->
-            <!--org.wso2.carbon.security.caas.api.*,-->
-            <!--org.wso2.carbon.messaging.*,-->
-            <!--org.wso2.carbon.kernel.context.*,-->
-            <!--org.wso2.msf4j.*,-->
-            <!--javax.ws.rs.*,-->
-            <!--javax.xml.bind.*,-->
-            <!--io.swagger.annotations.*-->
-        <!--</import.package>-->
-        <!--<osgi.framework.package.import.version.range>[1.8.0, 2.0.0)-->
-        <!--</osgi.framework.package.import.version.range>-->
-        <!--<slf4j.logging.package.import.version.range>[1.7.1, 2.0.0)-->
-        <!--</slf4j.logging.package.import.version.range>-->
-        <!--<carbon.security.version>1.0.0-SNAPSHOT</carbon.security.version>-->
-    <!--</properties>-->
-
     <properties>
         <private.package>org.wso2.samples.multitenancy.*</private.package>
         <import.package>
@@ -105,9 +98,10 @@
             org.wso2.carbon.kernel.context.*,
         </import.package>
         <carbon.component>
-            osgi.service; objectClass="org.wso2.msf4j.Microservice"
+            osgi.service; objectClass="org.wso2.msf4j.Microservice";serviceCount="1"
         </carbon.component>
         <carbon.security.version>1.0.0-SNAPSHOT</carbon.security.version>
+        <p2-maven-plugin.version>1.2.0-SNAPSHOT</p2-maven-plugin.version>
     </properties>
 
 </project>

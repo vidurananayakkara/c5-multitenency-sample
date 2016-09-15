@@ -19,7 +19,18 @@ Follow the following steps in order to install the WSO2 MSF4J feature and it's d
 
 * Open pom.xml file and do the following changes
 
-    * Add the following dependencies to the "dependencies" section of the pon.xml file
+    * Add the following properties to the "properties" section of the pom.xml file. This is to specify the versions of the artifacts being used in the solution. (Versions may change. You may also specify version numbers in the `version` tag for appropriate package)
+    
+    ```xml
+            <carbon.datasources.version>1.0.0</carbon.datasources.version>
+            <carbon.jndi.version>1.0.0</carbon.jndi.version>
+            <carbon.messaging.version>1.0.4</carbon.messaging.version>
+            <carbon.metrics.version>2.0.1-SNAPSHOT</carbon.metrics.version>
+            <carbon.transport.http.netty.version>2.1.2</carbon.transport.http.netty.version>
+            <msffourj.version>2.0.0</msffourj.version>
+    ```
+
+    * Add the following dependencies to the "dependencies" section of the pom.xml file
     
     ```xml
             <!-- MSF4J -->
@@ -182,3 +193,62 @@ Follow the following steps in order to install the WSO2 MSF4J feature and it's d
 * Navigate to <PRODUCT_HOME>/distribution/target and find the `wso2carbon-kernel-{version}.zip` file. This version of the WSO2 Carbon Kernel now has the WSO2 MSF4J feature installed.
 
 * In order to run the WSO2 Carbon Kernel, extract the above zip file to a location of preference, navigate to the /bin directory and run `carbon.sh` (Linux) or `carbon.bat` (Windows).
+
+Installing WSO2 Carbon Security CAAS feature into WSO2 Carbon Kernel
+--------------------------------------------------------------------
+
+* Install WSO2 MSF4J feature to WSO2 Carbon Kernel as instructed above.
+
+* Open pom.xml file and do the following changes
+
+    * Add the following properties to the "properties" section of the pom.xml file. This is to specify the versions of the artifacts being used in the solution. (Versions may change. You may also specify version numbers in the `version` tag for appropriate package)
+    
+    ```xml
+            <org.wso2.carbon.caching.version>1.1.2-SNAPSHOT</org.wso2.carbon.caching.version>
+    ```
+
+    * Add the following dependencies to the "dependencies" section of the pom.xml file
+    
+    ```xml
+            <!-- org.wso2.carbon.security.caas -->
+            <dependency>
+                <groupId>org.wso2.carbon.caching</groupId>
+                <artifactId>org.wso2.carbon.caching.feature</artifactId>
+                <version>${org.wso2.carbon.caching.version}</version>
+                <type>zip</type>
+            </dependency>
+    
+    ```
+
+
+    * Navigate to the "plugins" section of the pom.xml file and find the plugin with the following information
+    
+    **Group ID:** `org.wso2.carbon.maven`
+    **Artifact ID:** `carbon-feature-plugin`
+    
+    Add the following features inside `executions` > `execution` (goal = "generate-repo") > `configuration` > `features` element
+    
+    ``` xml
+            <!-- org.wso2.carbon.security.caas -->
+            <feature>
+                <id>org.wso2.carbon.caching.feature</id>
+                <version>${org.wso2.carbon.caching.version}</version>
+            </feature>
+    ```
+
+
+    * Navigate to the "plugins" section of the pom.xml file and find the plugin with the following information (same plugin as the previous step)
+    
+    **Group ID:** `org.wso2.carbon.maven`
+    **Artifact ID:** `carbon-feature-plugin`
+    
+    Add the following features inside `executions` > `execution` (goal = "install") > `configuration` > `features` element
+    
+    ``` xml
+            <!-- org.wso2.carbon.security.caas -->
+            <feature>
+                <id>org.wso2.carbon.caching.feature.group</id>
+                <version>${org.wso2.carbon.caching.version}</version>
+            </feature>
+    ```
+

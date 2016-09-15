@@ -57,7 +57,8 @@ runDockerImage(){
     fi
 
     # Run docker container
-    CONTAINER_ID=`docker run -d ${2}`
+#    CONTAINER_ID=`docker run -d ${2}`
+    CONTAINER_ID=`docker run ${2}`
 
     # Display docker container ip address information
     displayContainerIdAndIpAddress ${CONTAINER_ID}

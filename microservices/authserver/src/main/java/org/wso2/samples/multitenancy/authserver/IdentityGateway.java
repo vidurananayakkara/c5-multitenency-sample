@@ -21,6 +21,7 @@ package org.wso2.samples.multitenancy.authserver;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -38,6 +39,8 @@ import org.wso2.msf4j.Microservice;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 import javax.ws.rs.GET;
@@ -71,7 +74,18 @@ public class IdentityGateway implements Microservice {
      */
     @Activate
     protected void activate(BundleContext context) {
+
         LOGGER.info("Identity gateway activated.");
+    }
+
+    /**
+     * Operations to perform when the bundle is de-activated.
+     *
+     * @param bundleContext bundle context
+     */
+    @Deactivate
+    protected void deactivate(BundleContext bundleContext) {
+        LOGGER.info("Identity gateway deactivated");
     }
 
     /**
@@ -86,7 +100,7 @@ public class IdentityGateway implements Microservice {
             policy = ReferencePolicy.DYNAMIC,
             unbind = "unRegisterCarbonRealm"
     )
-    public void registerCarbonRealm(final RealmService carbonRealmService) {
+    public void registerCarbonRealm(RealmService carbonRealmService) {
         IdentityDataHolder
                 .getInstance()
                 .registerCarbonRealmService(carbonRealmService);
@@ -96,8 +110,10 @@ public class IdentityGateway implements Microservice {
     /**
      * Un register realm service.
      */
-    public void unRegisterCarbonRealm() {
-        IdentityDataHolder.getInstance().unRegisterCarbonRealmServer();
+    public void unRegisterCarbonRealm(RealmService carbonRealmService) {
+        IdentityDataHolder
+                .getInstance()
+                .unRegisterCarbonRealmServer();
         LOGGER.info("Realm service successfully unregistered.");
     }
 
@@ -159,5 +175,23 @@ public class IdentityGateway implements Microservice {
         } catch (UserNotFoundException e) {
             return Response.serverError().build();
         }
+    }
+
+    /**
+     * Operations to perform when starting micro-service.
+     */
+    @PostConstruct
+    public void init() {
+
+        LOGGER.info("Auth Service started successfully");
+    }
+
+    /**
+     * Operations to perform when exiting micro-service.
+     */
+    @PreDestroy
+    public void close() {
+
+        LOGGER.info("Auth Service shutdown completed");
     }
 }

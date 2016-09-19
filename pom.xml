@@ -25,7 +25,7 @@
     <parent>
         <groupId>org.wso2.msf4j</groupId>
         <artifactId>msf4j-parent</artifactId>
-        <version>2.0.0</version>
+        <version>2.0.1-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -88,7 +88,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javax.ws.rs-api.version>2.0.1</javax.ws.rs-api.version>
         <slf4j-api.version>1.7.21</slf4j-api.version>
-        <msf4j.version>2.0.0</msf4j.version>
+        <msf4j.version>2.0.1-SNAPSHOT</msf4j.version>
         <c5-multitenancy.version>1.0-SNAPSHOT</c5-multitenancy.version>
         <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
         <org.wso2.eclipse.osgi.version>3.11.0.v20160603-1336</org.wso2.eclipse.osgi.version>
